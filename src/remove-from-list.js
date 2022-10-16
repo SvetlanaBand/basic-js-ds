@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 // const { ListNode } = require('../extensions/list-node.js');
 
@@ -22,25 +22,29 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
- function removeKFromList( l, k ) {
-  let arr = []
-  let node = l
-  while(node != null) {
-    if (node.value!=k) arr.push(node.value)
-    node = node.next
-  }
-  return arr.reverse().reduce((acc, cur) => {
-    if (acc) {
-      const node = new ListNode(cur);
-      node.next = acc;
-      return node;
+function removeKFromList(l, k) {
+  let ll = l;
+
+  function rem() {
+    if (ll.value === k) {
+      ll.value = ll.next.value;
+      ll.next = ll.next.next;
+      rem();
     }
+    return ll;
+  }
+  rem();
 
-    return new ListNode(cur);
-  }, null)
+  while (ll.next) {
+    if (ll.next.value === k) {
+      ll.next = ll.next.next;
+    } else {
+      ll = ll.next;
+    }
+  }
+
+  return l;
 }
-
-
 module.exports = {
-  removeKFromList
+  removeKFromList,
 };
